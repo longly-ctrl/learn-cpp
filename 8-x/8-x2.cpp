@@ -1,5 +1,27 @@
 #include "Random.h"
+#include <limits>
 #include <iostream>
+
+int getGuess(int count, int min, int max)
+{
+	while(true)
+	{
+		std::cout << "Guess #" << count << ": ";
+		int guess{};
+		std::cin >> guess;
+
+		bool success{std::cin};
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		if(!success || guess < min || guess > max)
+			continue;
+
+		return guess;
+	}
+}
+
+
 
 bool playHiLo(int guesses, int min, int max)
 {
@@ -10,9 +32,7 @@ bool playHiLo(int guesses, int min, int max)
 
 	for(int count{1}; count <= guesses; ++count)
 	{
-		std::cout << "Guess #" << count << ": ";
-		int guess{};
-		std::cin >> guess;
+		int guess{getGuess(count, min, max)};
 
 		if(guess > number)
 		{
@@ -39,6 +59,7 @@ bool playAgain()
 		char ch{};
 		std::cin >> ch;
 
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		switch(ch)
 		{
 		case 'y': 
